@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="30" scan="true" scanPeriod="30 seconds">
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.out</target>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampPattern>
+      <fieldNames>
+        <message>msg</message>
+      </fieldNames>
+    </encoder>
+  </appender>
+  <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+      <jsonFormatter
+        class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+        <prettyPrint>true</prettyPrint>
+      </jsonFormatter>
+      <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+    </layout>
+  </appender>
+
+
+  <logger name="com.aviv.starter" level="INFO" additivity="false">
+    <appender-ref ref="json"/>
+  </logger>
+  <logger name="org.apache.kafka" level="WARN" additivity="false">
+    <appender-ref ref="console"/>
+  </logger>
+
+  <root level="INFO" additivity="false">
+    <appender-ref ref="console"/>
+  </root>
+
+  <logger name="jsonLogger" level="DEBUG">
+    <appender-ref ref="json" />
+  </logger>
+
+</Configuration>
